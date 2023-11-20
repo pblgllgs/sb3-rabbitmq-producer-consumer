@@ -18,9 +18,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class MessageProducer {
 
-    @Value("${broker.queue.name}")
-    private String queue;
-
     private final RabbitTemplate rabbitTemplate;
 
     private int i = 0;

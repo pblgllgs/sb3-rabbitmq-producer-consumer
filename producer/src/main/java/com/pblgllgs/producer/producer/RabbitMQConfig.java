@@ -8,22 +8,54 @@ package com.pblgllgs.producer.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class RabbitMQConfig {
 
-//    @Value("${broker.queue.name}")
-//    private String queue;
-//
-//    @Bean
-//    public Queue newQueue() {
-//        return new Queue(queue);
-//    }
+    @Value("${q.hr.marketing}")
+    private String queueMarketing;
+
+    @Value("${q.hr.accounting}")
+    private String queueAccounting;
+
+    @Value("${x.hr}")
+    private String exchange;
+
+
+    @Bean
+    public Queue newQueueMarketing(){
+        return new Queue(queueMarketing);
+    }
+    @Bean
+    public Queue newQueueAccounting(){
+        return new Queue(queueAccounting);
+    }
+
+    @Bean
+    public FanoutExchange exchangeFanout(){
+        return new FanoutExchange(exchange);
+    }
+
+    @Bean
+    public Binding bindingFanoutMarketing(Queue newQueueMarketing, FanoutExchange exchangeFanout) {
+        return BindingBuilder.bind(newQueueMarketing).to(exchangeFanout);
+    }
+
+    @Bean
+    public Binding bindingDirect(Queue newQueueAccounting, FanoutExchange exchange) {
+        return BindingBuilder.bind(newQueueAccounting).to(exchange);
+    }
+
 
     @Bean
     public Jackson2JsonMessageConverter messageConverter() {
@@ -35,6 +67,7 @@ public class RabbitMQConfig {
     @Bean
     public RabbitTemplate rabbitTemplateDirect(ConnectionFactory connectionFactory, Jackson2JsonMessageConverter messageConverter) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setExchange(exchange);
         rabbitTemplate.setMessageConverter(messageConverter);
         return rabbitTemplate;
     }

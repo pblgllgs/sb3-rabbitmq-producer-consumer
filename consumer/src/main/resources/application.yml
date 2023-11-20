@@ -11,6 +11,9 @@ spring:
 server:
   port: 8081
 
-broker:
-  queue:
-    name: my.queue
+q:
+  hr:
+    marketing: q.hr.marketing
+    accounting: q.hr.accounting
+x:
+  hr: x.hr
