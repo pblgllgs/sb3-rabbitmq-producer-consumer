@@ -1,0 +1,16 @@
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  application:
+    name: producer
+
+server:
+  port: 8080
+
+
+broker:
+  queue:
+    name: my.queue
