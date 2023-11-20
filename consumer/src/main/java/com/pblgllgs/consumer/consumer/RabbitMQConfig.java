@@ -19,41 +19,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("${q.hr.marketing}")
-    private String queueMarketing;
-
-    @Value("${q.hr.accounting}")
-    private String queueAccounting;
-
-    @Value("${x.hr}")
-    private String exchange;
-
-
-    @Bean
-    public Queue newQueueMarketing(){
-        return new Queue(queueMarketing);
-    }
-    @Bean
-    public Queue newQueueAccounting(){
-        return new Queue(queueAccounting);
-    }
-
-    @Bean
-    public FanoutExchange exchangeFanout(){
-        return new FanoutExchange(exchange);
-    }
-
-    @Bean
-    public Binding bindingFanoutMarketing(Queue newQueueMarketing, FanoutExchange exchangeFanout) {
-        return BindingBuilder.bind(newQueueMarketing).to(exchangeFanout);
-    }
-
-    @Bean
-    public Binding bindingDirect(Queue newQueueAccounting, FanoutExchange exchange) {
-        return BindingBuilder.bind(newQueueAccounting).to(exchange);
-    }
-
-
     @Bean
     public Jackson2JsonMessageConverter messageConverter() {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -64,7 +29,6 @@ public class RabbitMQConfig {
     @Bean
     public RabbitTemplate rabbitTemplateDirect(ConnectionFactory connectionFactory, Jackson2JsonMessageConverter messageConverter) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setExchange(exchange);
         rabbitTemplate.setMessageConverter(messageConverter);
         return rabbitTemplate;
     }

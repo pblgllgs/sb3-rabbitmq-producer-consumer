@@ -12,8 +12,13 @@ server:
 
 
 q:
-  hr:
-    marketing: q.hr.marketing
-    accounting: q.hr.accounting
+  picture:
+    vector: q.picture.vector
+    image: q.picture.image
 x:
-  hr: x.hr
+  picture: x.picture
+
+routing-key:
+  png: png
+  jpg: jpg
+  svg: svg

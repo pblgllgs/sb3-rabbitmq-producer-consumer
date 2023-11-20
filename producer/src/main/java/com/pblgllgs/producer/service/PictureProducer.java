@@ -6,27 +6,23 @@ package com.pblgllgs.producer.service;
  *
  */
 
+import com.pblgllgs.producer.models.Picture;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
-public class MessageProducer {
-
+public class PictureProducer {
     private final RabbitTemplate rabbitTemplate;
 
-    private int i = 0;
+    @Value("${x.picture}")
+    private String exchange;
 
-//    @Scheduled(fixedRate = 500)
-//    public void sendMessage(){
-//        i ++;
-//        log.info(String.valueOf(i));
-//        rabbitTemplate.convertAndSend(queue,i);
-//    }
+    public void sendMessage(@Payload Picture picture) {
+        rabbitTemplate.convertAndSend(exchange, picture.getType(), picture);
+    }
 
 }

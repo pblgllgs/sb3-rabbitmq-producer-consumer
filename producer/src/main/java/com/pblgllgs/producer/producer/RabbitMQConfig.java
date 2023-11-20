@@ -8,10 +8,7 @@ package com.pblgllgs.producer.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.springframework.amqp.core.Binding;
-import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.FanoutExchange;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
@@ -22,38 +19,52 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("${q.hr.marketing}")
-    private String queueMarketing;
+    @Value("${q.picture.vector}")
+    private String queueVector;
 
-    @Value("${q.hr.accounting}")
-    private String queueAccounting;
+    @Value("${q.picture.image}")
+    private String queueImage;
 
-    @Value("${x.hr}")
+    @Value("${x.picture}")
     private String exchange;
 
+    @Value("${routing-key.jpg}")
+    private String jpg;
+
+    @Value("${routing-key.png}")
+    private String png;
+
+    @Value("${routing-key.svg}")
+    private String svg;
+
 
     @Bean
-    public Queue newQueueMarketing(){
-        return new Queue(queueMarketing);
+    public Queue newQueueImage(){
+        return new Queue(queueImage);
     }
     @Bean
-    public Queue newQueueAccounting(){
-        return new Queue(queueAccounting);
-    }
-
-    @Bean
-    public FanoutExchange exchangeFanout(){
-        return new FanoutExchange(exchange);
+    public Queue newQueueVector(){
+        return new Queue(queueVector);
     }
 
     @Bean
-    public Binding bindingFanoutMarketing(Queue newQueueMarketing, FanoutExchange exchangeFanout) {
-        return BindingBuilder.bind(newQueueMarketing).to(exchangeFanout);
+    public DirectExchange exchangeDirect(){
+        return new DirectExchange(exchange);
     }
 
     @Bean
-    public Binding bindingDirect(Queue newQueueAccounting, FanoutExchange exchange) {
-        return BindingBuilder.bind(newQueueAccounting).to(exchange);
+    public Binding bindingDirectJPG(Queue newQueueImage, DirectExchange exchangeDirect) {
+        return BindingBuilder.bind(newQueueImage).to(exchangeDirect).with(jpg);
+    }
+
+    @Bean
+    public Binding bindingDirectPNG(Queue newQueueImage, DirectExchange exchangeDirect) {
+        return BindingBuilder.bind(newQueueImage).to(exchangeDirect).with(png);
+    }
+
+    @Bean
+    public Binding bindingDirectSVG(Queue newQueueVector, DirectExchange exchangeDirect) {
+        return BindingBuilder.bind(newQueueVector).to(exchangeDirect).with(svg);
     }
 
 

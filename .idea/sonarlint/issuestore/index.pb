@@ -42,3 +42,11 @@ Oproducer/src/main/java/com/pblgllgs/producer/service/HumanResourceProducer.java
 Mconsumer/src/main/java/com/pblgllgs/consumer/services/AccountingConsumer.java,1\b\1bfae2c8b516fdf6046e5b225fb67f15309af004
 |
 Lconsumer/src/main/java/com/pblgllgs/consumer/services/MarketingConsumer.java,1\5\15b16a9ec8b63f1822f5033e2a5a8a49fc52f36c
+p
+@producer/src/main/java/com/pblgllgs/producer/models/Picture.java,a\0\a0be65bf7e5264b08ea8bd3db12e7cb4a1c9a06d
+y
+Iproducer/src/main/java/com/pblgllgs/producer/service/PictureProducer.java,8\0\80ce6e6a8431f46510e631ed858fcf28a3a23298
+z
+Jconsumer/src/main/java/com/pblgllgs/consumer/services/PictureConsumer.java,0\c\0c53d12c3203c733e5a2df408a7a6b836f668cbc
+p
+@consumer/src/main/java/com/pblgllgs/consumer/models/Picture.java,2\c\2c28e855df8fd170db971d79d00255dc8ac16ede

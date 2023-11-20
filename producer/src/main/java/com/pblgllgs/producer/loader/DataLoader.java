@@ -6,27 +6,37 @@ package com.pblgllgs.producer.loader;
  *
  */
 
-import com.pblgllgs.producer.models.Employee;
-import com.pblgllgs.producer.service.HumanResourceProducer;
+import com.pblgllgs.producer.models.Picture;
+import com.pblgllgs.producer.service.PictureProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class DataLoader implements CommandLineRunner {
 
-    private final HumanResourceProducer humanResourceProducer;
+    private final PictureProducer pictureProducer;
+
+    private final List<String> SOURCES = List.of("mobile", "web");
+    private final List<String> TYPES = List.of("jpg", "png", "svg");
 
     @Override
-    public void run(String... args) throws Exception {
-        Employee employee = new Employee(UUID.randomUUID().toString(), "pblgllgs", LocalDate.now());
-        log.info(employee.toString());
-        humanResourceProducer.sendMessageWithEmployee(employee);
+    public void run(String... args) {
+        for (int i = 0; i < 10; i++) {
+            Picture picture = Picture.builder()
+                    .name("Picture - " + UUID.randomUUID())
+                    .size(ThreadLocalRandom.current().nextLong(1, 10000))
+                    .source(SOURCES.get(i % SOURCES.size()))
+                    .type(TYPES.get(i % TYPES.size()))
+                    .build();
+            pictureProducer.sendMessage(picture);
+        }
     }
 }
