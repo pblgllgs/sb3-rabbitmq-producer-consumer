@@ -25,6 +25,12 @@ public class RabbitMQConfig {
     @Value("${q.picture.image}")
     private String queueImage;
 
+    @Value("${q.picture.log}")
+    private String queueLog;
+
+    @Value("${q.picture.filter}")
+    private String queueFilter;
+
     @Value("${x.picture}")
     private String exchange;
 
@@ -37,6 +43,12 @@ public class RabbitMQConfig {
     @Value("${routing-key.svg}")
     private String svg;
 
+    @Value("${routing-key.log}")
+    private String log;
+
+    @Value("${routing-key.filter}")
+    private String filter;
+
 
     @Bean
     public Queue newQueueImage(){
@@ -48,23 +60,42 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public DirectExchange exchangeDirect(){
-        return new DirectExchange(exchange);
+    public Queue newQueueLog(){
+        return new Queue(queueLog);
+    }
+    @Bean
+    public Queue newQueueFilter(){
+        return new Queue(queueFilter);
     }
 
     @Bean
-    public Binding bindingDirectJPG(Queue newQueueImage, DirectExchange exchangeDirect) {
-        return BindingBuilder.bind(newQueueImage).to(exchangeDirect).with(jpg);
+    public TopicExchange exchangeTopic(){
+        return new TopicExchange(exchange);
     }
 
     @Bean
-    public Binding bindingDirectPNG(Queue newQueueImage, DirectExchange exchangeDirect) {
-        return BindingBuilder.bind(newQueueImage).to(exchangeDirect).with(png);
+    public Binding bindingDirectJPG(Queue newQueueImage, TopicExchange exchangeTopic) {
+        return BindingBuilder.bind(newQueueImage).to(exchangeTopic).with(jpg);
     }
 
     @Bean
-    public Binding bindingDirectSVG(Queue newQueueVector, DirectExchange exchangeDirect) {
-        return BindingBuilder.bind(newQueueVector).to(exchangeDirect).with(svg);
+    public Binding bindingDirectPNG(Queue newQueueImage, TopicExchange exchangeTopic) {
+        return BindingBuilder.bind(newQueueImage).to(exchangeTopic).with(png);
+    }
+
+    @Bean
+    public Binding bindingDirectLOG(Queue newQueueLog, TopicExchange exchangeTopic) {
+        return BindingBuilder.bind(newQueueLog).to(exchangeTopic).with(log);
+    }
+
+    @Bean
+    public Binding bindingDirectFILTER(Queue newQueueFilter, TopicExchange exchangeTopic) {
+        return BindingBuilder.bind(newQueueFilter).to(exchangeTopic).with(filter);
+    }
+
+    @Bean
+    public Binding bindingDirectSVG(Queue newQueueVector, TopicExchange exchangeTopic) {
+        return BindingBuilder.bind(newQueueVector).to(exchangeTopic).with(svg);
     }
 
 

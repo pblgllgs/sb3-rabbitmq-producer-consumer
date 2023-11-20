@@ -15,10 +15,14 @@ q:
   picture:
     vector: q.picture.vector
     image: q.picture.image
+    filter: q.picture.filter
+    log: q.picture.log
 x:
   picture: x.picture
 
 routing-key:
-  png: png
-  jpg: jpg
-  svg: svg
+  png: "*.*.png"
+  jpg: "#.jpg"
+  svg: "*.*.svg"
+  filter: "mobile.#"
+  log: "*.large.svg"

@@ -6,12 +6,8 @@ package com.pblgllgs.consumer.consumer;
  *
  */
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.springframework.amqp.core.*;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,17 +15,41 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
+    @Value("${q.picture.vector}")
+    private String queueVector;
+
+    @Value("${q.picture.image}")
+    private String queueImage;
+
+    @Value("${q.picture.log}")
+    private String queueLog;
+
+    @Value("${q.picture.filter}")
+    private String queueFilter;
+
+    @Value("${x.picture}")
+    private String exchange;
+
     @Bean
-    public Jackson2JsonMessageConverter messageConverter() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new JavaTimeModule());
-        return new Jackson2JsonMessageConverter(objectMapper);
+    public Queue newQueueImage(){
+        return new Queue(queueImage);
+    }
+    @Bean
+    public Queue newQueueVector(){
+        return new Queue(queueVector);
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplateDirect(ConnectionFactory connectionFactory, Jackson2JsonMessageConverter messageConverter) {
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(messageConverter);
-        return rabbitTemplate;
+    public Queue newQueueLog(){
+        return new Queue(queueLog);
+    }
+    @Bean
+    public Queue newQueueFilter(){
+        return new Queue(queueFilter);
+    }
+
+    @Bean
+    public TopicExchange exchangeTopic(){
+        return new TopicExchange(exchange);
     }
 }
