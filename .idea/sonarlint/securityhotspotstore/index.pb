@@ -31,3 +31,14 @@ z
 Jproducer/src/main/java/com/pblgllgs/producer/service/EmployeeProducer.java,8\2\8269fd582aa71a249b8c9679b59204acee05d148
 q
 Aconsumer/src/main/java/com/pblgllgs/consumer/models/Employee.java,0\f\0fed9961cea16fb6cfbf61c4c1b4b1f7360b9204
+:
+
+.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
+€
+Pproducer/src/main/java/com/pblgllgs/producer/service/HummanResourceProducer.java,2\2\22f78f63de805ee4464c7b7279f80e94bc6ec84d
+
+Oproducer/src/main/java/com/pblgllgs/producer/service/HumanResourceProducer.java,b\b\bbf0a77d5fcf47d72f62ae853c647637fc03f063
+}
+Mconsumer/src/main/java/com/pblgllgs/consumer/services/AccountingConsumer.java,1\b\1bfae2c8b516fdf6046e5b225fb67f15309af004
+|
+Lconsumer/src/main/java/com/pblgllgs/consumer/services/MarketingConsumer.java,1\5\15b16a9ec8b63f1822f5033e2a5a8a49fc52f36c

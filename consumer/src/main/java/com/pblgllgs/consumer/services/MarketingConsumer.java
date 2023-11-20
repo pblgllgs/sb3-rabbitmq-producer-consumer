@@ -14,12 +14,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class MessageConsumer {
-
-    @RabbitListener(queues = "q.hr.accounting")
-    public void consumeMessageAccounting(@Payload Employee employee){
-        log.info(employee.toString() + " from: q.hr.accounting");
-    }
+public class MarketingConsumer {
 
     @RabbitListener(queues = "q.hr.marketing")
     public void consumeMessageMarketing(@Payload Employee employee){
