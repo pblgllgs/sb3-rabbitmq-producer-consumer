@@ -1,0 +1,5 @@
+
+{
+java:S1128"YRemove this unused import 'org.springframework.amqp.rabbit.connection.ConnectionFactory'.(ÐÛ¯Ïþÿÿÿÿ8ñê¯š¿1
+m
+java:S1128"PRemove this unused import 'org.springframework.amqp.rabbit.core.RabbitTemplate'.(ŒÏ„¼8ñê¯š¿1
