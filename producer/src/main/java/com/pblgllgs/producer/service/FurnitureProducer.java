@@ -30,9 +30,11 @@ public class FurnitureProducer {
 
     public void sendMessage(Furniture furniture) throws JsonProcessingException {
         MessageProperties messageProperties = new MessageProperties();
+        log.info(furniture.toString());
         messageProperties.setHeader("color",furniture.getColor());
         messageProperties.setHeader("material",furniture.getMaterial());
         String valueAsString = objectMapper.writeValueAsString(furniture);
+        log.info(valueAsString);
         Message message = new Message(valueAsString.getBytes(), messageProperties);
         rabbitTemplate.send(exchange,"",message);
     }

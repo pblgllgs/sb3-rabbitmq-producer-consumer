@@ -8,7 +8,6 @@ package com.pblgllgs.consumer.consumer;
 
 import org.springframework.amqp.core.HeadersExchange;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.core.TopicExchange;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,4 +39,5 @@ public class RabbitMQConfig {
     public HeadersExchange exchangeHeaders() {
         return new HeadersExchange(exchange);
     }
+
 }
