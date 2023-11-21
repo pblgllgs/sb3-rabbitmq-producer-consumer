@@ -1,5 +1,9 @@
 
 \
 java:S1128":Remove this unused import 'org.springframework.amqp.core'.(Φ©‘Ϊϋÿÿÿÿ8¦ρμπΎ1
+{
+java:S1128"YRemove this unused import 'org.springframework.amqp.rabbit.connection.ConnectionFactory'.(ΠΫ―Οώÿÿÿÿ8’Ώ1
+m
+java:S1128"PRemove this unused import 'org.springframework.amqp.rabbit.core.RabbitTemplate'.(Ο„Ό8’Ώ1
 l
 java:S1128"ORemove this unused import 'org.springframework.beans.factory.annotation.Value'.(μψ›8§ρμπΎ1
