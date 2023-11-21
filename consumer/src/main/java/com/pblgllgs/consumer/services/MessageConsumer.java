@@ -18,13 +18,6 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class MessageConsumer {
 
-//    @RabbitListener(queues = "my.queue",concurrency = "3-7")
-//    public void consumerMessage(String message) throws InterruptedException {
-//        TimeUnit.MILLISECONDS.sleep(ThreadLocalRandom.current().nextLong(1000,2000));
-//        log.info("{} : Consuming {}" , Thread.currentThread().getName(), message);
-//    }
-
-
     @RabbitListener(queues = "employee")
     public void consumeMessage(Employee employee){
         log.info(employee.toString());

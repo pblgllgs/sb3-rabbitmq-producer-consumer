@@ -20,25 +20,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-//    @Value("${broker.queue.name}")
-//    private String queue;
-//
-//    @Bean
-//    public Queue newQueue(){
-//        return new Queue(queue);
-//    }
+    @Value("${broker.queue.name}")
+    private String queue;
+
+    @Bean
+    public Queue newQueue(){
+        return new Queue(queue);
+    }
 
     @Bean
     public Jackson2JsonMessageConverter messageConverter() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         return new Jackson2JsonMessageConverter(objectMapper);
-    }
-
-    @Bean
-    public RabbitTemplate rabbitTemplateDirect(ConnectionFactory connectionFactory, Jackson2JsonMessageConverter messageConverter) {
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(messageConverter);
-        return rabbitTemplate;
     }
 }
