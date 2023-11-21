@@ -12,17 +12,8 @@ server:
 
 
 q:
-  picture:
-    vector: q.picture.vector
-    image: q.picture.image
-    filter: q.picture.filter
-    log: q.picture.log
+  promotion:
+    discount: q.promotion.discount
+    free-delivery: q.promotion.free-delivery
 x:
-  picture: x.picture
-
-routing-key:
-  png: "*.*.png"
-  jpg: "#.jpg"
-  svg: "*.*.svg"
-  filter: "mobile.#"
-  log: "*.large.svg"
+  promotion: x.promotion

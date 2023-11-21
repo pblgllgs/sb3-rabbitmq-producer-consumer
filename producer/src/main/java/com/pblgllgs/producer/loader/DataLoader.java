@@ -6,37 +6,37 @@ package com.pblgllgs.producer.loader;
  *
  */
 
-import com.pblgllgs.producer.models.Picture;
-import com.pblgllgs.producer.service.PictureProducer;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.pblgllgs.producer.models.Furniture;
+import com.pblgllgs.producer.service.FurnitureProducer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class DataLoader implements CommandLineRunner {
 
-    private final PictureProducer pictureProducer;
+    private final FurnitureProducer furnitureProducer;
 
-    private final List<String> SOURCES = List.of("mobile", "web");
-    private final List<String> TYPES = List.of("jpg", "png", "svg");
+    private final List<String> COLORS = List.of("white", "red", "green");
+    private final List<String> MATERIAL = List.of("wood", "steel", "plastic");
 
     @Override
-    public void run(String... args) {
+    public void run(String... args) throws JsonProcessingException {
         for (int i = 0; i < 10; i++) {
-            Picture picture = Picture.builder()
-                    .name("Picture - " + UUID.randomUUID())
-                    .size(ThreadLocalRandom.current().nextLong(1, 10000))
-                    .source(SOURCES.get(i % SOURCES.size()))
-                    .type(TYPES.get(i % TYPES.size()))
+            Furniture furniture = Furniture.builder()
+                    .name("Furniture: " + i)
+                    .color(COLORS.get(i % COLORS.size()))
+                    .material(MATERIAL.get(i % MATERIAL.size()))
+                    .price(i)
                     .build();
-            pictureProducer.sendMessage(picture);
+            furnitureProducer.sendMessage(furniture);
         }
+
     }
 }

@@ -8,94 +8,89 @@ package com.pblgllgs.producer.producer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.springframework.amqp.core.*;
+import jakarta.annotation.PreDestroy;
+import lombok.RequiredArgsConstructor;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.HeadersExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Configuration
+@RequiredArgsConstructor
 public class RabbitMQConfig {
 
-    @Value("${q.picture.vector}")
-    private String queueVector;
+    public static final String COLOR = "color";
+    public static final String MATERIAL = "material";
 
-    @Value("${q.picture.image}")
-    private String queueImage;
+    @Value("${q.promotion.discount}")
+    private String queueDiscount;
 
-    @Value("${q.picture.log}")
-    private String queueLog;
+    @Value("${q.promotion.free-delivery}")
+    private String queueFree;
 
-    @Value("${q.picture.filter}")
-    private String queueFilter;
 
-    @Value("${x.picture}")
+    @Value("${x.promotion}")
     private String exchange;
 
-    @Value("${routing-key.jpg}")
-    private String jpg;
-
-    @Value("${routing-key.png}")
-    private String png;
-
-    @Value("${routing-key.svg}")
-    private String svg;
-
-    @Value("${routing-key.log}")
-    private String log;
-
-    @Value("${routing-key.filter}")
-    private String filter;
-
-
     @Bean
-    public Queue newQueueImage(){
-        return new Queue(queueImage);
-    }
-    @Bean
-    public Queue newQueueVector(){
-        return new Queue(queueVector);
+    public Queue newQueueDiscount() {
+        return new Queue(queueDiscount);
     }
 
     @Bean
-    public Queue newQueueLog(){
-        return new Queue(queueLog);
-    }
-    @Bean
-    public Queue newQueueFilter(){
-        return new Queue(queueFilter);
+    public Queue newQueueFree() {
+        return new Queue(queueFree);
     }
 
     @Bean
-    public TopicExchange exchangeTopic(){
-        return new TopicExchange(exchange);
+    public HeadersExchange exchangeHeaders() {
+        return new HeadersExchange(exchange);
     }
 
     @Bean
-    public Binding bindingDirectJPG(Queue newQueueImage, TopicExchange exchangeTopic) {
-        return BindingBuilder.bind(newQueueImage).to(exchangeTopic).with(jpg);
+    public Binding bindingHeadersDiscount1(Queue newQueueDiscount, HeadersExchange exchangeHeaders) {
+        Map<String, Object> headers = new HashMap<>();
+        headers.put(COLOR, "white");
+        headers.put(MATERIAL, "wood");
+
+        return BindingBuilder.bind(newQueueDiscount)
+                .to(exchangeHeaders)
+                .whereAll(headers)
+                .match();
     }
 
     @Bean
-    public Binding bindingDirectPNG(Queue newQueueImage, TopicExchange exchangeTopic) {
-        return BindingBuilder.bind(newQueueImage).to(exchangeTopic).with(png);
+    public Binding bindingHeadersDiscount2(Queue newQueueDiscount, HeadersExchange exchangeHeaders) {
+        Map<String, Object> headers = new HashMap<>();
+        headers.put(COLOR, "red");
+        headers.put(MATERIAL, "steel");
+
+        return BindingBuilder.bind(newQueueDiscount)
+                .to(exchangeHeaders)
+                .whereAll(headers)
+                .match();
     }
 
     @Bean
-    public Binding bindingDirectLOG(Queue newQueueLog, TopicExchange exchangeTopic) {
-        return BindingBuilder.bind(newQueueLog).to(exchangeTopic).with(log);
-    }
+    public Binding bindingHeadersFree(Queue newQueueFree, HeadersExchange exchangeHeaders) {
+        Map<String, Object> headers = new HashMap<>();
+        headers.put(COLOR, "red");
+        headers.put(MATERIAL, "wood");
 
-    @Bean
-    public Binding bindingDirectFILTER(Queue newQueueFilter, TopicExchange exchangeTopic) {
-        return BindingBuilder.bind(newQueueFilter).to(exchangeTopic).with(filter);
-    }
-
-    @Bean
-    public Binding bindingDirectSVG(Queue newQueueVector, TopicExchange exchangeTopic) {
-        return BindingBuilder.bind(newQueueVector).to(exchangeTopic).with(svg);
+        return BindingBuilder.bind(newQueueFree)
+                .to(exchangeHeaders)
+                .whereAny(headers)
+                .match();
     }
 
 
@@ -113,6 +108,5 @@ public class RabbitMQConfig {
         rabbitTemplate.setMessageConverter(messageConverter);
         return rabbitTemplate;
     }
-
 
 }

@@ -6,6 +6,7 @@ package com.pblgllgs.consumer.consumer;
  *
  */
 
+import org.springframework.amqp.core.HeadersExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,41 +16,28 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("${q.picture.vector}")
-    private String queueVector;
+    @Value("${q.promotion.discount}")
+    private String queueDiscount;
 
-    @Value("${q.picture.image}")
-    private String queueImage;
+    @Value("${q.promotion.free-delivery}")
+    private String queueFree;
 
-    @Value("${q.picture.log}")
-    private String queueLog;
 
-    @Value("${q.picture.filter}")
-    private String queueFilter;
-
-    @Value("${x.picture}")
+    @Value("${x.promotion}")
     private String exchange;
 
     @Bean
-    public Queue newQueueImage(){
-        return new Queue(queueImage);
-    }
-    @Bean
-    public Queue newQueueVector(){
-        return new Queue(queueVector);
+    public Queue newQueueDiscount() {
+        return new Queue(queueDiscount);
     }
 
     @Bean
-    public Queue newQueueLog(){
-        return new Queue(queueLog);
-    }
-    @Bean
-    public Queue newQueueFilter(){
-        return new Queue(queueFilter);
+    public Queue newQueueFree() {
+        return new Queue(queueFree);
     }
 
     @Bean
-    public TopicExchange exchangeTopic(){
-        return new TopicExchange(exchange);
+    public HeadersExchange exchangeHeaders() {
+        return new HeadersExchange(exchange);
     }
 }
