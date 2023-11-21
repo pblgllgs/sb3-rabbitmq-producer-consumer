@@ -1,9 +1,4 @@
 
-\
-java:S1128":Remove this unused import 'org.springframework.amqp.core'.(Ö©‘Úûÿÿÿÿ8¦ñìğ¾1
-{
-java:S1128"YRemove this unused import 'org.springframework.amqp.rabbit.connection.ConnectionFactory'.(ĞÛ¯Ïşÿÿÿÿ8’š¿1
-m
-java:S1128"PRemove this unused import 'org.springframework.amqp.rabbit.core.RabbitTemplate'.(ŒÏ„¼8’š¿1
-l
-java:S1128"ORemove this unused import 'org.springframework.beans.factory.annotation.Value'.(ìø›8§ñìğ¾1
+n
+java:S1128
+"QRemove this unused import 'com.fasterxml.jackson.datatype.jsr310.JavaTimeModule'.(â…Ìï8õ¸„›¿1
